@@ -95,7 +95,7 @@ class Predictor:
 
     def start_webcam(self):
         # 0 is the default camera, change it if you have multiple cameras
-        cap = cv2.VideoCapture(1)
+        cap = cv2.VideoCapture(0)
         while cap.isOpened():
             ret, frame = cap.read()
             if not ret:
