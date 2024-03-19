@@ -94,6 +94,7 @@ class Predictor:
             image.save(os.path.join(output_path, f"{name}_mask_{id}.png"))
 
     def start_webcam(self):
+        # 0 is the default camera, change it if you have multiple cameras
         cap = cv2.VideoCapture(1)
         while cap.isOpened():
             ret, frame = cap.read()
@@ -112,8 +113,12 @@ class Predictor:
                 scale=0.8, 
                 instance_mode=ColorMode.IMAGE_BW
             )
-            out = visualizer.draw_instance_predictions(results["instances"].to("cpu"))
-            cv2.imshow("Webcam", out.get_image()[:, :, ::-1])
+
+            instances = self._remove_overlapping_masks(results["instances"])
+            out = visualizer.draw_instance_predictions(instances.to("cpu"))
+            image = out.get_image()[:, :, ::-1].astype("uint8")
+            cv2.putText(image, f'FPS: {fps:.2f}', (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
+            cv2.imshow("Webcam", image)
             if cv2.waitKey(1) == ord("q"):
                 break
         cap.release()
