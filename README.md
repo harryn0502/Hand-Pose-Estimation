@@ -2,7 +2,7 @@
 Model to predict the segmentation of hands in RGB images.
 
 ## Prerequisites
-- [Python](https://www.python.org/)
+- [Python](https://www.python.org/) or [Anaconda](https://www.anaconda.com/)
 
 ## Packages
 
