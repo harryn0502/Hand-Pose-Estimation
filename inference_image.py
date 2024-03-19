@@ -1,4 +1,3 @@
-
 import os
 from utils.predictor import Predictor
 
