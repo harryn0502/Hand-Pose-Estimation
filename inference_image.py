@@ -1,8 +1,8 @@
 import os
 from utils.predictor import Predictor
 
-file = "imagehand8.jpg"
-image = os.path.join("images", "custom", file)
+file = "sample.jpg"
+image = os.path.join("images", file)
 filename = os.path.join("output", file)
 
 predictor = Predictor()
