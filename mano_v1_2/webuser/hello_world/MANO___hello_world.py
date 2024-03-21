@@ -54,12 +54,11 @@ import random as rnd
 
 ## Load MANO/SMPL+H model (here we load the righ hand model)
 ## Make sure path is correct
-hand = 'LEFT'
-# m = load_model(f'/Users/ajaymdn/Documents/mano_v1_2/models/MANO_{hand}.pkl', ncomps=6, flat_hand_mean=False)
-m = load_model(f'/Users/ajaymdn/Documents/mano_v1_2/handmodel/left/pkl/handpose0.pkl', ncomps=6, flat_hand_mean=False)
+hand = 'RIGHT'
+m = load_model(f'/Users/ajaymdn/Documents/mano_v1_2/models/MANO_{hand}.pkl', ncomps=6, flat_hand_mean=False)
 
 
-for i in range(0, 1):
+for i in range(0, 10):
     # Assign random pose and shape parameters
     m.betas[:] = np.random.rand(m.betas.size) * .03
     m.pose[:] = np.random.rand(m.pose.size) * 1.0
@@ -71,17 +70,16 @@ for i in range(0, 1):
     # the first 3 elements correspond to global rotation
     # the next ncomps to the hand pose
 
-    # save_model(m, f'/Users/ajaymdn/Documents/mano_v1_2/handmodel/{hand}/pkl/handpose{i}.pkl')
+    save_model(m, f'/Users/ajaymdn/Documents/mano_v1_2/handmodel/{hand}/pkl/handpose{i}.pkl')
 
     # Convert the array to a string with brackets
     pose_position = ', '.join(str(pose[0]) for pose in m.pose[:3])
     finger_position = ', '.join(str(finger[0]) for finger in m.pose[3:])
-
     poses = ', '.join(str(pose[0]) for pose in m.pose)
     betas = ', '.join(str(beta[0]) for beta in m.betas)
 
     # Specify the file path
-    file_path = f'/Users/ajaymdn/Documents/mano_v1_2/handmodel/test/handpose0.txt'
+    file_path = f'/Users/ajaymdn/Documents/mano_v1_2/handmodel/{hand}/txt/handpose{i}.txt'
 
     # Write the string to the file
     with open(file_path, 'w') as file:
@@ -97,9 +95,9 @@ for i in range(0, 1):
         # file.write('\n')
         # file.write("All faces: " + str(m.f))
 
-    ## Write to an .obj file
-    # outmesh_path = f'/Users/ajaymdn/Documents/mano_v1_2/handpose/{hand}/handpose{i}.obj'
-    outmesh_path = f'/Users/ajaymdn/Documents/mano_v1_2/handpose/test/handpose0.obj'
+    # Write to an .obj file
+    outmesh_path = f'/Users/ajaymdn/Documents/mano_v1_2/handpose/{hand}/handpose{i}.obj'
+    # outmesh_path = f'/Users/ajaymdn/Documents/mano_v1_2/handpose/test/handpose0.obj'
     with open(outmesh_path, 'w') as fp:
         for v in m.r:
             fp.write( 'v %f %f %f\n' % ( v[0], v[1], v[2]) )
