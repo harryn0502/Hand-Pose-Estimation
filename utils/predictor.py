@@ -43,11 +43,12 @@ CFG.MODEL.DEVICE = DEVICE
 # DATASET METADATA
 class Metadata:
     def get(self, _):
-        return ['hand'] #your class labels
+        return ['hand']
 
 class Predictor:
-    def __init__(self, score_threshold=0.5, iou_threshold=0.95):
+    def __init__(self, model="model_final.pth", score_threshold=0.5, iou_threshold=0.95):
         self.cfg = CFG.clone()
+        self.cfg.MODEL.WEIGHTS = model
         self.cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = score_threshold
         self.predictor = DefaultPredictor(self.cfg)
         self.iou_threshold = iou_threshold
