@@ -4,10 +4,10 @@ import os
 
 #image_path: path of main image, mask_image path of mask image, output_path: path to output result, 
 #invert: invert the effect of mask (removes masked portion by default, set to true to only keep the masked portion)
-def black_out_region_save(image_path, mask_path, output_path, invert = False):
+def black_out_region_save(images_path, mask_path, output_path, invert = False):
     # Open images
-    main_image = np.array(Image.open(main_image_path))
-    mask_image = np.array(Image.open(mask_image_path).convert('L'))
+    main_image = np.array(Image.open(images_path))
+    mask_image = np.array(Image.open(images_path).convert('L'))
 
     # create the mask
     threshold = 128
@@ -18,7 +18,7 @@ def black_out_region_save(image_path, mask_path, output_path, invert = False):
     # Set mask pixels to black
     result_image[mask_image] = [0, 0, 0]
 
-    Image.fromarray(result_image).save(output_image_path)
+    Image.fromarray(result_image).save(output_path)
 
 #same but takes in np images instead and returns an np image instead of saving
 def black_out_region_return(image, mask,  invert = False):
@@ -33,10 +33,12 @@ def black_out_region_return(image, mask,  invert = False):
 
     return result_image
 
-def black_out_region_bulk(image_folder, mask_folder, output_folder, seperator = "_"):
+def black_out_region_bulk(images_folder, mask_folder, output_folder, seperator = "_mask"):
     # Open images
-    image_files = os.listdir(image_folder)
-    image_paths = [os.path.join(image_folder, image_file) for image_file in image_files]
+    files = os.listdir(images_folder)
+    image_files = [file for file in files if file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp', '.svg', '.tiff'))]
+
+    image_paths = [os.path.join(images_folder, image_file) for image_file in image_files]
     
     images = {os.path.basename(image_path).split('.')[0]: (np.array(Image.open(image_path)), image_path.split('.')[-1]) for image_path in image_paths}
     
@@ -46,18 +48,18 @@ def black_out_region_bulk(image_folder, mask_folder, output_folder, seperator = 
     for mask_path in mask_paths: 
         mask_image = np.array(Image.open(mask_path).convert('L'))
         mask_image = mask_image < threshold
-        image_name = os.path.basename(mask_path).split(seperator)[0]
+        image_name, mask_no = os.path.basename(mask_path).split(seperator)
         image, image_type = images[image_name]
         result_image = image.copy()
         result_image[mask_image] = [0,0,0]
         
-        Image.fromarray(result_image).save(os.path.join(output_folder, image_name + "." + image_type))
+        Image.fromarray(result_image).save(os.path.join(output_folder, image_name + mask_no + "." + image_type))
 
 
 if __name__ == "__main__":
-    image_folder = "./images"
+    images_folders = "./images"
     mask_folder = "./masks"
     output_folder = "./output"
     
-    black_out_region_bulk(image_folder, mask_folder, output_folder)
+    black_out_region_bulk(images_folder, mask_folder, output_folder)
 
