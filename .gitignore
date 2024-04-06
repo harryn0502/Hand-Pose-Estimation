@@ -162,7 +162,16 @@ cython_debug/
 # Models
 *.pth*
 
+# Ignore mac related files
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+__MACOSX/
+
 #outputs
 masked_images/
 masks/
 output/
+*.obj
