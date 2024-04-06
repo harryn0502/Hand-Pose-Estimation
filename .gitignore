@@ -161,3 +161,8 @@ cython_debug/
 
 # Models
 *.pth*
+
+#outputs
+masked_images/
+masks/
+output/
