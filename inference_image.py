@@ -25,6 +25,9 @@ predictor.set_iou_threshold(0.95)
 files = os.listdir(images_folder)
 image_files = [file for file in files if file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp', '.svg', '.tiff'))]
 
+if not os.path.isdir(masks_folder):
+    os.makedirs(masks_folder)
+
 for image_name in image_files:
     image_path = os.path.join(images_folder, image_name)
     output_name = os.path.join(masks_folder, image_name)
@@ -36,12 +39,17 @@ for image_name in image_files:
 """
 mask images
 """
+#delete masks folder and recreate it
+if not os.path.isdir(masked_images_folder):
+    os.makedirs(masked_images_folder)
 
 black_out_region_bulk(images_folder, masks_folder, masked_images_folder)
 
 """
 Pose estimation
 """
+if not os.path.isdir(output_folder):
+    os.makedirs(output_folder)
 
 pose_model = "model/snapshot_99.pth.tar"
 estimate_pose(masked_images_folder, output_folder, pose_model)
