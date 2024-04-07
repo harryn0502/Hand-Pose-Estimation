@@ -41,7 +41,16 @@ for i, image_name in enumerate(image_files):
     image_path = os.path.join(images_folder, image_name)
     output_name = os.path.join(masks_folder, image_name)
 
+    if image_name != "rgb_0002.png":
+        continue
+
     instances = predictor.predict(image_path)
+
+    if image_name == "rgb_0002.png":
+        for i in range(len(instances.pred_boxes)):
+            print(instances.pred_boxes[i])
+            # print(instances.pred_boxes[i].numpy())
+        breakpoint()
     #predictor.save_image(image_path, output_name, instances)
     predictor.save_masks(output_name, instances)
     print(f"segmentation progress {i+1}/{len(image_files)}", end="\r")
