@@ -73,7 +73,7 @@ clear_directory(masked_images_folder)
 
 #only use 1 masking method (comment other out)
 
-if args.invert is not None:
+if args.invert:
     #mask all but the mask (no background)
     black_out_all_bulk(images_folder, masks_folder, masked_images_folder)
 else:
