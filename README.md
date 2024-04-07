@@ -22,37 +22,28 @@ cd hand-segmentation
 
 Using conda (recommended)
 ```bash
-conda create -n hand-segmentation python
+conda create -n hand-segmentation python=3.9
 conda activate hand-segmentation
 ```
 
-Using venv
+
+### 3. Install Dependencies
 
 ```bash
-python -m venv venv
+pip install torch==1.12.1 torchvision==0.13.1 torchaudio==0.12.1
 ```
 
-### 3. Install PyTorch and torchvision
 ```bash
-pip install torch torchvision
+pip install -r requirements.txt
 ```
 
-### 4. Install OpenCV
-```bash
-pip install opencv-python
-```
-
-### 5. Install detectron2
-```bash
-pip install 'git+https://github.com/facebookresearch/detectron2.git'
-```
 **Note**: This may take a while to build and install.
 
 ## Inferences / Predictions
 
 ### Download the model
 
-Download the pre-trained model from teams and place it in the `model` directory.
+Download the pre-trained segementation model "model_final.pth" and pose estimation `snapshot_99.pth.tar` and put it into the model directory.
 
 ### Single Image
 ```bash
