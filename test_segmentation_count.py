@@ -1,5 +1,6 @@
 import os
 import json
+import argparse
 
 images_folder = "images"
 mask_folder = "masks"
@@ -8,12 +9,21 @@ hand_count_file = "ground_truth/hand_count.json"
 files = os.listdir(images_folder)
 image_files = [file for file in files if file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp', '.svg', '.tiff'))]
 
+
+
+
 #populate hand_count.json (assumed 2 for each)
-hand_counts = {}
-for image_file in image_files:
-    hand_counts[image_file.split(".")[0]] = 2
-with open(hand_count_file, 'w') as f:
-    json.dump(hand_counts, f)
+parser = argparse.ArgumentParser()
+parser.add_argument("--default")
+args = parser.parse_args()
+
+if args.default is not None:
+    default_hands = args.default
+    hand_counts = {}
+    for image_file in image_files:
+        hand_counts[image_file.split(".")[0]] = int(default_hands)
+    with open(hand_count_file, 'w') as f:
+        json.dump(hand_counts, f)
 
 
 #test it

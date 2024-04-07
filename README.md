@@ -39,12 +39,21 @@ pip install -r requirements.txt
 
 Download the pre-trained segementation model `model_final.pth`` and pose estimation `snapshot_99.pth.tar` and put them into the model directory.
 
-### Single Image
+### Estimate from images folder
 ```bash
 python inference_image.py
 ```
 
 ### Test segmentation
+To test whether the correct amount of hands were detected for each image after running inference_image.py
+
+Add a hand_count.json file into the ground_truth folder then run:
 ```bash
 python test_segmentation_count.py
+```
+
+Optionally if all images have the same amount of hands you can add the `--default` flag and specify an integer afterwards, for example for an expected amount of 2 hands in each image we would run:
+
+```bash
+python test_segmentation_count.py --default 2
 ```
