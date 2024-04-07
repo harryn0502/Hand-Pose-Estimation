@@ -78,11 +78,3 @@ def black_out_region_bulk(images_folder, mask_folder, output_folder, seperator="
             )
         else:
             print("No corresponding image for mask ", mask_path)
-
-
-if __name__ == "__main__":
-    images_folders = "./images"
-    mask_folder = "./masks"
-    output_folder = "./output"
-
-    black_out_region_bulk(images_folder, mask_folder, output_folder)

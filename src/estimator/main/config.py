@@ -42,11 +42,11 @@ class Config:
     cur_dir = osp.dirname(os.path.abspath(__file__))
     root_dir = osp.join(cur_dir, '..')
     data_dir = osp.join(root_dir, 'data')
-    output_dir = osp.join(root_dir, 'output')
-    model_dir = osp.join(output_dir, 'model_dump')
-    vis_dir = osp.join(output_dir, 'vis')
-    log_dir = osp.join(output_dir, 'log')
-    result_dir = osp.join(output_dir, 'result')
+    # output_dir = osp.join(root_dir, 'output')
+    # model_dir = osp.join(output_dir, 'model_dump')
+    vis_dir = ""
+    # log_dir = osp.join(output_dir, 'log')
+    # result_dir = osp.join(output_dir, 'result')
 
     ## others
     num_thread = 40
@@ -67,8 +67,8 @@ sys.path.insert(0, osp.join(cfg.root_dir, 'common'))
 from utils.dir import add_pypath, make_folder
 add_pypath(osp.join(cfg.data_dir))
 add_pypath(osp.join(cfg.data_dir, cfg.dataset))
-make_folder(cfg.model_dir)
-make_folder(cfg.vis_dir)
-make_folder(cfg.log_dir)
-make_folder(cfg.result_dir)
+# make_folder(cfg.model_dir)
+# make_folder(cfg.vis_dir)
+# make_folder(cfg.log_dir)
+# make_folder(cfg.result_dir)
 
