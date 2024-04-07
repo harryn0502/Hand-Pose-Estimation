@@ -40,8 +40,9 @@ pip install -r requirements.txt
 Download the pre-trained segementation model `model_final.pth`` and pose estimation `snapshot_20.pth.tar` and put them into the model directory.
 
 ### Estimate from images folder
+optional --invert flag for the inverting the image masking
 ```bash
-python inference_image.py
+python inference_image.py [--invert]
 ```
 
 ### Test segmentation

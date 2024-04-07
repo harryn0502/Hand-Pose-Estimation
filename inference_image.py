@@ -3,6 +3,7 @@ from PIL import Image
 from src.predictor import Predictor   
 from src.mask_image import black_out_all_bulk, black_out_masks_bulk
 from src.estimator.pose_estimator import estimate_pose
+import argparse
 
 #clear out a directory, or create it if it does not exist
 def clear_directory(directory):
@@ -12,6 +13,12 @@ def clear_directory(directory):
         for filename in os.listdir(directory):
             for filename in os.listdir(directory):
                 os.remove(os.path.join(directory, filename))
+
+# Read arguments
+parser = argparse.ArgumentParser()
+#optional inversion of mask
+parser.add_argument("--invert", action="store_true")
+args = parser.parse_args()
 
 # Set the image and output filename
 images_folder = "images"
@@ -66,11 +73,12 @@ clear_directory(masked_images_folder)
 
 #only use 1 masking method (comment other out)
 
-#mask all but the mask (no background)
-black_out_masks_bulk(images_folder, masks_folder, masked_images_folder)
-
-#mask all other other masks (with background)
-# black_out_all_bulk(images_folder, masks_folder, masked_images_folder)
+if args.invert is not None:
+    #mask all but the mask (no background)
+    black_out_all_bulk(images_folder, masks_folder, masked_images_folder)
+else:
+    #mask all other other masks (with background)
+    black_out_masks_bulk(images_folder, masks_folder, masked_images_folder)
 
 print("masking completed")
 
