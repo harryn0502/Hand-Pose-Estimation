@@ -1,14 +1,8 @@
 # Hand Segmentation
-Model to predict the segmentation of hands in RGB images.
+Model estimate the 3d pose of multiple hands from an rgb image.
 
 ## Prerequisites
 - [Python](https://www.python.org/) or [Anaconda](https://www.anaconda.com/)
-
-## Packages
-
-- [PyTorch and torchvision](https://pytorch.org/)
-- [OpenCV](https://opencv.org/)
-- [Detectron2](https://github.com/facebookresearch/detectron2)
 
 ## Installation
 
@@ -43,14 +37,14 @@ pip install -r requirements.txt
 
 ### Download the model
 
-Download the pre-trained segementation model "model_final.pth" and pose estimation `snapshot_99.pth.tar` and put it into the model directory.
+Download the pre-trained segementation model `model_final.pth`` and pose estimation `snapshot_99.pth.tar` and put them into the model directory.
 
 ### Single Image
 ```bash
 python inference_image.py
 ```
 
-### Webcam
+### Test segmentation
 ```bash
-python inference_webcam.py
+python test_segmentation_count.py
 ```
