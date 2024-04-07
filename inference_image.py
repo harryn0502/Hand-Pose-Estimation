@@ -1,7 +1,7 @@
 import os
 from PIL import Image
 from src.predictor import Predictor   
-from src.mask_image import black_out_region_bulk
+from src.mask_image import black_out_all_bulk, black_out_masks_bulk
 from src.estimator.pose_estimator import estimate_pose
 
 #clear out a directory, or create it if it does not exist
@@ -50,6 +50,8 @@ for i, image_name in enumerate(image_files):
         image = Image.fromarray(mask)
         image.save(os.path.join(masks_folder, f"{image_base}_mask_{j}.png"))
         image_bounding_boxes[f"{image_base}_{j}"] = bounding_boxes[j]
+        image_bounding_boxes[f"{image_base}_{j}"][2] -= image_bounding_boxes[f"{image_base}_{j}"][0]
+        image_bounding_boxes[f"{image_base}_{j}"][3] -= image_bounding_boxes[f"{image_base}_{j}"][1]
 
     print(f"segmentation progress {i+1}/{len(image_files)}", end="\r")
 
@@ -62,7 +64,13 @@ mask images
 #delete masks folder and recreate it
 clear_directory(masked_images_folder)
 
-black_out_region_bulk(images_folder, masks_folder, masked_images_folder)
+#only use 1 masking method (comment other out)
+
+#mask all but the mask (no background)
+black_out_masks_bulk(images_folder, masks_folder, masked_images_folder)
+
+#mask all other other masks (with background)
+# black_out_all_bulk(images_folder, masks_folder, masked_images_folder)
 
 print("masking completed")
 
@@ -81,7 +89,7 @@ for i, image_name in enumerate(image_files):
     image_base = image_name.split(".")[0]
     image_path = os.path.join(masked_images_folder, image_name)
     output_2d_path = os.path.join(output_2d, image_name)
-    output_3d_path =os.path.join(output_3d, image_name)
+    output_3d_path = os.path.join(output_3d, image_name)
     estimate_pose(image_path, image_bounding_boxes[image_base], pose_model, output_2d_path, output_3d_path)
 
     print(f"pose estimation progress {i+1}/{len(image_files)}", end="\r")

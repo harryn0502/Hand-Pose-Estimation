@@ -37,7 +37,7 @@ pip install -r requirements.txt
 
 ### Download the model
 
-Download the pre-trained segementation model `model_final.pth`` and pose estimation `snapshot_99.pth.tar` and put them into the model directory.
+Download the pre-trained segementation model `model_final.pth`` and pose estimation `snapshot_20.pth.tar` and put them into the model directory.
 
 ### Estimate from images folder
 ```bash
