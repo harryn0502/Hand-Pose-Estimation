@@ -173,5 +173,7 @@ __MACOSX/
 #outputs
 masked_images/
 masks/
-output/
+output_2d/
+output_3d/
+output_hand_count/
 *.obj
