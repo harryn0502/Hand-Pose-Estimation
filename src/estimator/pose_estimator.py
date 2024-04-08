@@ -27,6 +27,7 @@ from utils.preprocessing import load_img, load_skeleton, process_bbox, generate_
 from utils.vis import vis_keypoints, vis_3d_keypoints
 
 
+#returns a list of strings indentifying type of hands detected 
 def estimate_pose(img_path, bbox, model_path, output_2d, output_3d, mode='single'):
     # argument parsing
     cudnn.benchmark = True
@@ -106,4 +107,12 @@ def estimate_pose(img_path, bbox, model_path, output_2d, output_3d, mode='single
     # To make x,y, and z in real unit (e.g., mm), you need to know camera intrincis and root depth.
     # The root depth can be obtained from RootNet (https://github.com/mks0601/3DMPPE_ROOTNET_RELEASE)
     vis_3d_keypoints(joint_coord, joint_valid, skeleton, output_3d)
+
+    hands = []
+    if left_exist:
+        hands.append("left")
+    if right_exist:
+        hands.append("right")
+    return hands
+
 
