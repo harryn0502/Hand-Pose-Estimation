@@ -35,8 +35,8 @@ def black_out_region_return(image, mask, invert=False):
 
     return result_image
 
-
-def black_out_region_bulk(images_folder, mask_folder, output_folder, seperator="_mask"):
+#blackout all except the mask
+def black_out_all_bulk(images_folder, mask_folder, output_folder, seperator="_mask"):
     # Open images
     files = os.listdir(images_folder)
     image_files = [
@@ -63,26 +63,69 @@ def black_out_region_bulk(images_folder, mask_folder, output_folder, seperator="
     mask_files = os.listdir(mask_folder)
     mask_paths = [os.path.join(mask_folder, mask_file) for mask_file in mask_files]
 
-    for mask_path in mask_paths:
+    for mask_file in mask_files:
+        mask_path = os.path.join(mask_folder, mask_file)
         mask_image = np.array(Image.open(mask_path).convert("L"))
         mask_image = mask_image < threshold
         image_name, suffix = os.path.basename(mask_path).split(seperator)
-        mask_no = "".join(suffix.split(".")[:-1])
         if image_name in images:
             image, image_type = images[image_name]
             result_image = image.copy()
-            result_image[mask_image] = [0, 0, 0]
+            result_image[mask_image] = 0
 
             Image.fromarray(result_image).save(
-                os.path.join(output_folder, image_name + mask_no + "." + image_type)
+                os.path.join(output_folder, mask_file.replace("_mask", ""))
             )
         else:
             print("No corresponding image for mask ", mask_path)
 
+#blackout out all other masks with corresponding prefix
+def black_out_masks_bulk(images_folder, mask_folder, output_folder, seperator="_mask"):
+    # Open images
+    files = os.listdir(images_folder)
+    image_files = [
+        file
+        for file in files
+        if file.lower().endswith(
+            (".png", ".jpg", ".jpeg", ".gif", ".bmp", ".svg", ".tiff")
+        )
+    ]
 
-if __name__ == "__main__":
-    images_folders = "./images"
-    mask_folder = "./masks"
-    output_folder = "./output"
+    image_paths = [
+        os.path.join(images_folder, image_file) for image_file in image_files
+    ]
 
-    black_out_region_bulk(images_folder, mask_folder, output_folder)
+    images = {
+        os.path.basename(image_path).split(".")[0]: (
+            np.array(ImageOps.exif_transpose(Image.open(image_path))),
+            image_path.split(".")[-1],
+        )
+        for image_path in image_paths
+    }
+
+    threshold = 128
+    mask_files = os.listdir(mask_folder)
+
+    mask_groups = {}
+    for mask_file in mask_files:
+        mask_prefix = mask_file.split(seperator)[0]
+        if mask_prefix not in mask_groups:
+            mask_groups[mask_prefix] = []
+        mask_groups[mask_prefix].append(mask_file)
+
+
+    for mask_group, mask_files in mask_groups.items():
+        for keep_file in mask_files:
+            mask_image_paths = [os.path.join(mask_folder, mask_file) for mask_file in mask_files if mask_file != keep_file]
+            mask_images = [np.array(Image.open(mask_image_path).convert("L")) for mask_image_path in mask_image_paths]
+            mask_images = [mask_image > threshold for mask_image in mask_images]
+            if mask_group in images:
+                image, image_type = images[mask_group]
+                result_image = image.copy()
+                for mask_image in mask_images:
+                    result_image[mask_image] = 0
+                Image.fromarray(result_image).save(
+                    os.path.join(output_folder, keep_file.replace("_mask", ""))
+                )
+            else:
+                print("No corresponding image for mask ", mask_group)
