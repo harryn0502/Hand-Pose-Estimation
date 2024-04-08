@@ -57,3 +57,7 @@ Optionally if all images have the same amount of hands you can add the `--defaul
 ```bash
 python test_segmentation_count.py --default 2
 ```
+
+## Synthetic Dataset Generator
+This is the second synthetic dataset.
+Link: (https://github.com/v-karin/Hand-Pose-Estimation-Dataset-Generator)
