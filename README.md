@@ -37,7 +37,7 @@ pip install -r requirements.txt
 
 ### Download the model
 
-Download the pre-trained segementation model `model_final.pth` from [here](https://liveuclac.sharepoint.com/:u:/r/sites/comp0031138/Shared%20Documents/General/Segmentation%20Model/model_final.pth?csf=1&web=1&e=lk7j5T) and pose estimation `snapshot_20.pth.tar` from [here](https://drive.google.com/file/d/15Akkzf1AvKm6iKYQGPhBfGLSeF9DPiFZ/view?pli=1) and put them into the model directory.
+Download the pre-trained segementation model `model_final.pth` from [here](https://liveuclac.sharepoint.com/:u:/s/comp0031138/EXokK5XjQ61GhD6lhdpbssUBK_e_gCh0dOgR_fXMLknQ4Q?e=S74pIj) and pose estimation `snapshot_20.pth.tar` from [here](https://drive.google.com/file/d/15Akkzf1AvKm6iKYQGPhBfGLSeF9DPiFZ/view?pli=1) and put them into the model directory.
 
 ### Estimate from images folder
 optional --invert flag for the inverting the image masking
