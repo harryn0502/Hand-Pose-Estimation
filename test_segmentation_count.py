@@ -2,8 +2,7 @@ import os
 import json
 import argparse
 
-images_folder = "images"
-mask_folder = "masks"
+
 ground_truth_hand_count_file = "ground_truth/hand_count.json"
 estimated_hand_count_file = "output_hand_count/hand_count.json"
 

@@ -45,8 +45,8 @@ optional --invert flag for the inverting the image masking
 python inference_image.py [--invert]
 ```
 
-### Test segmentation
-To test whether the correct amount of hands were detected for each image after running inference_image.py
+### Test segmentation hand count
+To test whether the correct amount of hands were detected for each image after running inference_image
 
 Add a hand_count.json file into the ground_truth folder then run:
 ```bash
@@ -57,4 +57,12 @@ Optionally if all images have the same amount of hands you can add the `--defaul
 
 ```bash
 python test_segmentation_count.py --default 2
+```
+
+### Test segmentation hand type
+To test whether the correct type of hands were detected for each image after running inference_image
+
+Add a hand_count.json file into the ground_truth folder then run:
+```bash
+python test_hand_type.py
 ```
