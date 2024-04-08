@@ -27,7 +27,7 @@ from utils.preprocessing import load_img, load_skeleton, process_bbox, generate_
 from utils.vis import vis_keypoints, vis_3d_keypoints
 
 
-def estimate_pose(img_path, bbox, model_path, output_2d, output_3d):
+def estimate_pose(img_path, bbox, model_path, output_2d, output_3d, mode='single'):
     # argument parsing
     cudnn.benchmark = True
 
@@ -82,12 +82,20 @@ def estimate_pose(img_path, bbox, model_path, output_2d, output_3d):
     joint_valid = np.zeros((joint_num*2), dtype=np.float32)
     right_exist = False
     left_exist = False
-    if hand_type[0] > hand_type[1]:
-        right_exist = True
-        joint_valid[joint_type['right']] = 1
+    if mode == "single":
+        if hand_type[0] > hand_type[1]:
+            right_exist = True
+            joint_valid[joint_type['right']] = 1
+        else:
+            left_exist = True
+            joint_valid[joint_type['left']] = 1
     else:
-        left_exist = True
-        joint_valid[joint_type['left']] = 1
+        if hand_type[0] > 0.5:
+            right_exist = True
+            joint_valid[joint_type['right']] = 1
+        if hand_type[1] > 0.5:
+            left_exist = True
+            joint_valid[joint_type['left']] = 1
 
     # visualize joint coord in 2D space
     vis_img = original_img.copy()[:,:,::-1].transpose(2,0,1)
