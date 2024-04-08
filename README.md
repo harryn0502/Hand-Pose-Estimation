@@ -33,6 +33,10 @@ pip install -r requirements.txt
 
 **Note**: This may take a while to build and install.
 
+## Synthetic Dataset Generator
+This is the second synthetic dataset.
+Link: (https://github.com/v-karin/Hand-Pose-Estimation-Dataset-Generator)
+
 ## Inferences / Predictions
 
 ### Download the model
