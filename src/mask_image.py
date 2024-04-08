@@ -71,7 +71,7 @@ def black_out_all_bulk(images_folder, mask_folder, output_folder, seperator="_ma
         if image_name in images:
             image, image_type = images[image_name]
             result_image = image.copy()
-            result_image[mask_image] = [0, 0, 0]
+            result_image[mask_image] = 0
 
             Image.fromarray(result_image).save(
                 os.path.join(output_folder, mask_file.replace("_mask", ""))
@@ -123,7 +123,7 @@ def black_out_masks_bulk(images_folder, mask_folder, output_folder, seperator="_
                 image, image_type = images[mask_group]
                 result_image = image.copy()
                 for mask_image in mask_images:
-                    result_image[mask_image] = [0, 0, 0]
+                    result_image[mask_image] = 0
                 Image.fromarray(result_image).save(
                     os.path.join(output_folder, keep_file.replace("_mask", ""))
                 )
