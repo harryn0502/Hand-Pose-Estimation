@@ -1,5 +1,5 @@
-# Hand Segmentation
-Model estimate the 3d pose of multiple hands from an rgb image.
+# Multiple hand pose estimation from Single RGB Images
+This is the source code of the this [paper](https://github.com/harryn0502/Hand-Pose-Estimation/blob/a78ca074a6edb91dcc4c50354245f5be5679fa91/Multiple%20Hand%20Pose%20Estimation.pdf) that estimate mutiple hand pose from single RGB images.
 
 ## Prerequisites
 - [Python](https://www.python.org/) or [Anaconda](https://www.anaconda.com/)
